@@ -31,11 +31,16 @@ class Follower
         self.follower_bloodoaths.collect {|bo| bo.cult.slogan}
     end 
 
-    def self.most_active
-        self.all.max_by {|f| name}
+
+    def self.most_active       
+        followers = BloodOath.all.collect {|bo| bo.follower}
+        followers.max_by{|f| followers.count(f)}
     end 
 
     def self.top_ten
+            followers = BloodOath.all.collect {|bo| bo.follower}
+            sorted_followers = followers.sort{|a,b| followers.count(b) <=> followers.count(a)}
+            sorted_followers.uniq.first(10)
     end 
 
 
